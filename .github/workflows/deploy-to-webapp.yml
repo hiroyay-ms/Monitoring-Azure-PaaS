@@ -1,4 +1,4 @@
-name: WebApp
+name: Build and deploy ASP.Net Core Web App to Azure App Service
 
 on:
   workflow_dispatch:
