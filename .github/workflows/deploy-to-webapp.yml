@@ -17,21 +17,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '8.x'
-          include-prerelease: true
-      
-      - name: Build with dotnet
-        uses: dotnet build ${{ env.APP_PATH }} --configuration Release
-      
-      - name: dotnet publish
-        run: dotnet publish ${{ env.APP_PATH }} -c Release -o ${{env.APP_PATH}}/myapp
-      
-      - name: Upload artifact to deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: webapp
-          path: ${{env.APP_PATH}}/myapp
   
