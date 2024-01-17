@@ -49,7 +49,7 @@ jobs:
           name: webapp
       
       - name: Login to Azure
-        use: azure/login@v1
+        uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
