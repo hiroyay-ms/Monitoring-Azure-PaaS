@@ -1,10 +1,11 @@
 using System;
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 using Api.Data;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Options;
 
 [assembly: FunctionsStartup(typeof(Api.Startup))]
 namespace Api
@@ -20,7 +21,7 @@ namespace Api
             );
 
             builder.Services.AddApplicationInsightsTelemetry();
-            builder.Services.Configure<TelemetryConfiguration>(config =>
+            builder.Services.Configure<TelemetryConfiguration>( config =>
                 {
                     config.TelemetryInitializers.Add(new AppInsightsTelemetryInitializer());
                 }
