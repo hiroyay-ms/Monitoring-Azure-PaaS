@@ -587,6 +587,7 @@
             "location": "[resourceGroup().location]",
             "kind": "functionapp,linux",
             "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers/databases', variables('sqlServerName'), 'AdventureWorksLT')]",
                 "[resourceId('Microsoft.Web/serverfarms', variables('funcionHostingPlanName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('functionStorage'))]",
                 "[resourceId('Microsoft.Insights/components', variables('applicationInsights'))]",
@@ -628,6 +629,18 @@
                         {
                             "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
                             "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsights')), '2020-02-02').ConnectionString]"
+                        },
+                        {
+                            "name": "SQL_CONNECTIONSTRING",
+                            "value": "[format('Server=tcp:{0}.database.windows.net,1433;Initial Catalog=AdventureWorksLT;Persist Security Info=False;User ID={1};Password={2};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;', variables('sqlServerName'), parameters('sqlAdministratorLogin'), parameters('sqlAdministratorPassword'))]"
+                        },
+                        {
+                            "name": "BLOB_CONNECTIONSTRING",
+                            "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix=core.windows.net', parameters('storageAccountName'), listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2022-05-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "WEBSITE_TIME_ZONE",
+                            "value": "Asia/Tokyo"
                         }
                     ]
                 }
@@ -783,6 +796,7 @@
             "name": "[variables('webAppName')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', variables('functionName'))]",
                 "[resourceId('Microsoft.Web/serverfarms', variables('webAppHostingPlanName'))]",
                 "[resourceId('Microsoft.Insights/components', variables('applicationInsights'))]",
                 "[resourceId('Microsoft.Resources/deployments', 'web-outboundSubnetDeployment')]",
@@ -802,6 +816,10 @@
                         {
                             "name": "XDT_MicrosoftApplicationInsights_Mode",
                             "value": "default"
+                        },
+                        {
+                            "name": "Backend-Api",
+                            "value": "[format('https://{0}.azurewebsites.net/api/', variables('functionName'))]"
                         }
                     ],
                     "linuxFxVersion": "DOTNETCORE|8.0",
