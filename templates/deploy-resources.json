@@ -239,11 +239,6 @@
                 "supportsHttpsTrafficOnly": true,
                 "accessTier": "Hot",
                 "publicNetworkAccess": "Disabled",
-                "networkAcls": {
-                    "bypass": "Logging, Metrics",
-                    "defaultAction": "Deny",
-                    "ipRules": []
-                },
                 "encryption": {
                     "services": {
                         "file": {
