@@ -1,0 +1,63 @@
+name: Build and deploy ASP.Net Core Web App to Azure App Service
+
+on:
+  workflow_dispatch:
+    inputs:
+      AZURE_WEBAPP_NAME:
+        description: 'WebApp Name'
+        required: true
+
+env:
+  APP_PATH: './src/CS/Web'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.x'
+          include-prerelease: true
+      
+      - name: Build with dotnet
+        run: dotnet build ${{ env.APP_PATH }} --configuration Release
+      
+      - name: dotnet publish
+        run: dotnet publish ${{ env.APP_PATH }} -c Release -o ${{env.APP_PATH}}/myapp
+      
+      - name: Upload artifact to deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: webapp
+          path: ${{env.APP_PATH}}/myapp
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: webapp
+      
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ github.event.inputs.AZURE_WEBAPP_NAME }}
+          slot-name: 'production'
+          package: .
