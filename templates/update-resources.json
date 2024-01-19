@@ -57,12 +57,17 @@
     },
     "functions": [],
     "variables": {
+        "logAnalyticsWorkspace": "[concat('log-', parameters('baseResourceName'))]",
         "functionName": "[concat('func-', parameters('baseResourceName'))]",
         "funcionHostingPlanName": "[concat('plan-', variables('functionName'))]",
         "webAppName": "[concat('app-', parameters('baseResourceName'))]",
         "webAppHostingPlanName": "[concat('plan-', variables('webAppName'))]",
         "applicationInsights": "[concat('appi-', parameters('baseResourceName'))]",
-        "sqlServerName": "[concat('sql-', parameters('baseResourceName'))]"
+        "sqlServerName": "[concat('sql-', parameters('baseResourceName'))]",
+        "sqlDatabaseDiagnostics": "[concat('diag-', variables('sqlServerName'), '-AdventureWorksLT')]",
+        "blobStorageDiagnostics": "[concat('diag-', parameters('storageAccountName'), '-blob')]",
+        "webAppDiagnostics": "[concat('diag-', variables('webAppName'))]",
+        "functionAppDiagnostic": "[concat('diag-', variables('functionName'))]"
     },
     "resources": [
         {
@@ -108,7 +113,7 @@
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('funcionHostingPlanName'))]",
                 "httpsOnly": true,
                 "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), parameters('subnet3'))]",
-                "publicNetworkAccess": "Enabled",
+                "publicNetworkAccess": "Disabled",
                 "vnetRouteAllEnabled": true,
                 "siteConfig": {
                     "appSettings": [
@@ -177,8 +182,12 @@
                             "value": "default"
                         },
                         {
-                            "name": "Backend-Api",
+                            "name": "FUNCTION_URL",
                             "value": "[format('https://{0}.azurewebsites.net/api/', variables('functionName'))]"
+                        },
+                        {
+                            "name": "FUNCTION_KEY",
+                            "value": "[listkeys(concat(resourceId('Microsoft.Web/sites', variables('functionName')), '/host/default/'),'2021-02-01').functionKeys.default]"
                         }
                     ],
                     "linuxFxVersion": "DOTNETCORE|8.0",
@@ -188,8 +197,132 @@
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('webAppHostingPlanName'))]",
                 "httpsOnly": true,
                 "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), parameters('subnet2'))]",
-                "publicNetworkAccess": "Enabled",
+                "publicNetworkAccess": "Disabled",
                 "vnetRouteAllEnabled": true
+            }
+        },
+        {
+            "type": "Microsoft.Insights/diagnosticSettings",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[variables('sqlDatabaseDiagnostics')]",
+            "scope": "[resourceId('Microsoft.Sql/servers/databases', variables('sqlServerName'), 'AdventureWorksLT')]",
+            "properties": {
+                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]",
+                "logAnalyticsDestinationType": "Dedicated",
+                "logs":[
+                    {
+                        "categoryGroup": "audit",
+                        "enabled": true
+                    },
+                    {
+                        "categoryGroup": "allLogs",
+                        "enabled": true
+                    }
+                ],
+                "metrics": [
+                    {
+                        "category": "Basic",
+                        "enabled": true
+                    },
+                    {
+                        "category": "InstanceAndAppAdvanced",
+                        "enabled": true
+                    },
+                    {
+                        "category": "WorkloadManagement",
+                        "enabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Insights/diagnosticSettings",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[variables('blobStorageDiagnostics')]",
+            "scope": "[format('Microsoft.Storage/storageAccounts/{0}/blobServices/{1}', parameters('storageAccountName'), 'default')]",
+            "properties": {
+                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]",
+                "logAnalyticsDestinationType": "Dedicated",
+                "logs":[
+                    {
+                        "categoryGroup": "audit",
+                        "enabled": true
+                    },
+                    {
+                        "categoryGroup": "allLogs",
+                        "enabled": true
+                    }
+                ],
+                "metrics": [
+                    {
+                        "category": "Transaction",
+                        "enabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Insights/diagnosticSettings",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[variables('webAppDiagnostics')]",
+            "scope": "[resourceId('Microsoft.Web/sites', variables('webAppName'))]",
+            "properties": {
+                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]",
+                "logAnalyticsDestinationType": "Dedicated",
+                "logs": [
+                    {
+                        "category": "AppServiceHTTPLogs",
+                        "enabled": true
+                    },
+                    {
+                        "category": "AppServiceConsoleLogs",
+                        "enabled": true
+                    },
+                    {
+                        "category": "AppServiceAppLogs",
+                        "enabled": true
+                    },
+                    {
+                        "category": "AppServiceAuditLogs",
+                        "enabled": true
+                    },
+                    {
+                        "category": "AppServiceIPSecAuditLogs",
+                        "enabled": true
+                    },
+                    {
+                        "category": "AppServicePlatformLogs",
+                        "enabled": true
+                    }
+                ],
+                "metrics": [
+                    {
+                        "category": "AllMetrics",
+                        "enabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Insights/diagnosticSettings",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[variables('functionAppDiagnostic')]",
+            "scope": "[resourceId('Microsoft.Web/sites', variables('functionName'))]",
+            "properties": {
+                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]",
+                "logAnalyticsDestinationType": "Dedicated",
+                "logs": [
+                    {
+                        "category": "FunctionAppLogs",
+                        "enabled": true
+                    }
+                ],
+                "metrics": [
+                    {
+                        "category": "AllMetrics",
+                        "enabled": true
+                    }
+                ]
             }
         }
     ],

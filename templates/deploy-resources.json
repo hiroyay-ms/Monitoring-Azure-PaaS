@@ -76,13 +76,6 @@
                 "description": "リソース名で使用、リソースの省略形を接頭語として使用しますが、一意となりそうな名前が望ましい"
             }
         },
-        "logAnalyticsWorkspace": {
-            "type": "string",
-            "defaultValue": "log-1",
-            "metadata": {
-                "description": "Log Analytics Workspace"
-            }
-        },
         "sqlAdministratorLogin": {
             "type": "string",
             "defaultValue": "sqladmin",
@@ -110,8 +103,8 @@
         "privateEndpointWebJobsBlobStorageName": "[concat('pe-', parameters('functionStorage'), '-blob')]",
         "privateEndpointWebJobsFileStorageName": "[concat('pe-', parameters('functionStorage'), '-file')]",
         "privateEndpointFunctionName": "[concat('pe-', parameters('baseResourceName'), '-func')]",
-        "privateEndpointWebAppName": "[concat('pe-', parameters('baseResourceName'), '-web')]",
         "privateEndpointSqlServerName": "[concat('pe-', parameters('baseResourceName'), '-sql')]",
+        "logAnalyticsWorkspace": "[concat('log-', parameters('baseResourceName'))]",
         "functionName": "[concat('func-', parameters('baseResourceName'))]",
         "funcionHostingPlanName": "[concat('plan-', variables('functionName'))]",
         "webAppName": "[concat('app-', parameters('baseResourceName'))]",
@@ -212,7 +205,7 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2021-06-01",
-            "name": "[parameters('logAnalyticsWorkspace')]",
+            "name": "[variables('logAnalyticsWorkspace')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "sku": {
@@ -551,12 +544,12 @@
             "name": "[variables('applicationInsights')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspace'))]"
+                "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]"
             ],
             "kind": "web",
             "properties": {
                 "Application_Type": "web",
-                "WorkspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspace'))]"
+                "WorkspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]"
             }
         },
         {
@@ -813,8 +806,12 @@
                             "value": "default"
                         },
                         {
-                            "name": "Backend-Api",
+                            "name": "FUNCTION_URL",
                             "value": "[format('https://{0}.azurewebsites.net/api/', variables('functionName'))]"
+                        },
+                        {
+                            "name": "FUNCTION_KEY",
+                            "value": "[listkeys(concat(resourceId('Microsoft.Web/sites', variables('functionName')), '/host/default/'),'2021-02-01').functionKeys.default]"
                         }
                     ],
                     "linuxFxVersion": "DOTNETCORE|8.0",
@@ -872,53 +869,6 @@
             }
         },
         {
-            "type": "Microsoft.Network/privateEndpoints",
-            "apiVersion": "2023-04-01",
-            "name": "[variables('privateEndpointWebAppName')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', variables('webAppName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetwork'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), parameters('subnet1'))]"
-            ],
-            "properties": {
-                "subnet": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), parameters('subnet1'))]"
-                },
-                "privateLinkServiceConnections": [
-                    {
-                        "name": "webAppPrivateLinkConnection",
-                        "properties": {
-                            "privateLinkServiceId": "[resourceId('Microsoft.Web/sites', variables('webAppName'))]",
-                            "groupIds": [
-                                "sites"
-                            ]
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
-            "apiVersion": "2023-04-01",
-            "name": "[concat(variables('privateEndpointWebAppName'), '/default')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateEndpoints', variables('privateEndpointWebAppName'))]",
-                "[resourceId('Microsoft.Network/privateDnsZones', variables('privateWebDnsZone'))]"
-            ],
-            "properties": {
-                "privateDnsZoneConfigs": [
-                    {
-                        "name": "config1",
-                        "properties": {
-                            "privateDnsZoneId": "[resourceId('Microsoft.Network/privateDnsZones', variables('privateWebDnsZone'))]"
-                        }
-                    }
-                ]
-            }
-        },
-        {
             "type": "Microsoft.Sql/servers",
             "apiVersion": "2022-11-01-preview",
             "name": "[variables('sqlServerName')]",
@@ -937,7 +887,7 @@
                     "name": "AdventureWorksLT",
                     "location": "[resourceGroup().location]",
                     "sku": {
-                        "name": "GP_S_Gen5_1",
+                        "name": "GP_Gen5_2",
                         "tier": "GeneralPurpose"
                     },
                     "dependsOn": [
