@@ -91,6 +91,15 @@ table.index th, td {
   padding: 15px 5px;
 }
 
+table.index th:first-child, td:first-child {
+  text-align: center;
+}
+
+table.index td:first-child td:last-child
+{
+  text-align: center;
+}
+
 table.catalog {
   border-collapse: collapse;
   border-spacing: 0;
@@ -111,10 +120,12 @@ table.catalog thead th {
 
 table.catalog th:first-child {
   border-radius: 5px 0 0 0;
+  text-align: center;
 }
 
 table.catalog th:last-child {
   border-radius: 0 5px 0 0;
+  text-align: left;
 }
 
 table.catalog tr {
@@ -132,6 +143,14 @@ table.catalog td {
 
 table.catalog td p {
   margin: 1px 0;
+}
+
+table.catalog td:first-child {
+  text-align: center;
+}
+
+table.catalog td:last-child {
+  text-align: left;
 }
 
 table.catalog td:nth-child(2) p {
