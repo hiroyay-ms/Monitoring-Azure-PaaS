@@ -91,12 +91,11 @@ table.index th, td {
   padding: 15px 5px;
 }
 
-table.index th:first-child, th:last-child {
+table.index th:first-child {
   text-align: center;
 }
 
-table.index td:first-child, td:last-child
-{
+table.index td:first-child {
   text-align: center;
 }
 
