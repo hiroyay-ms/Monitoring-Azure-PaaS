@@ -1,7 +1,20 @@
+using Microsoft.ApplicationInsights.Extensibility;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddApplicationInsightsTelemetry();
+builder.Services.Configure<TelemetryConfiguration>(config =>
+{
+    config.TelemetryInitializers.Add(new AppInsightsTelemetryInitializer());
+});
+
+builder.Services.AddHttpClient("API", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["FUNCTION_URL"]);
+});
 
 var app = builder.Build();
 
