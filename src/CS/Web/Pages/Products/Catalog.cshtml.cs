@@ -30,7 +30,7 @@ public class CatalogModel : PageModel
         if (string.IsNullOrEmpty(Id))
             return;
 
-        string functionName = $"GetProducts?id={Id}";
+        string functionName = $"GetProduct?id={Id}";
 
         var httpClient = _httpClientFactory.CreateClient("API");
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, functionName);
