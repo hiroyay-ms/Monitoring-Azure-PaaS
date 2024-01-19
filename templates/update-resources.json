@@ -158,7 +158,10 @@
                             "value": "Asia/Tokyo"
                         }
                     ]
-                }
+                },
+                "use32BitWorkerProcess": true,
+                "ftpsState": "FtpsOnly",
+                "linuxFxVersion": "DOTNET|6.0"
             }
         },
         {

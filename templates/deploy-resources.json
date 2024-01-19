@@ -564,8 +564,12 @@
                 "tier": "ElasticPremium"
             },
             "properties": {
+                "workerSize": 3,
+                "workerSizeId": 3,
                 "numberOfWorkers": 1,
-                "maximumElasticWorkerCount": 5
+                "reserved": true,
+                "maximumElasticWorkerCount": 5,
+                "zoneRedundant": false
             }
         },
         {
@@ -631,7 +635,10 @@
                             "value": "Asia/Tokyo"
                         }
                     ]
-                }
+                },
+                "use32BitWorkerProcess": true,
+                "ftpsState": "FtpsOnly",
+                "linuxFxVersion": "DOTNET|6.0"
             }
         },
         {
