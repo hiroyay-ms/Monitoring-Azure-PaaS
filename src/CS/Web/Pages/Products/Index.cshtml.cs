@@ -36,6 +36,7 @@ public class  IndexModel : PageModel
 
         var httpClient = _httpClientFactory.CreateClient("API");
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, functionName);
+        httpRequestMessage.Headers.Add("x-functions-key", _configuration.GetValue<string>("FUNCTION_KEY"));
 
         var response = await httpClient.SendAsync(httpRequestMessage);
 
