@@ -189,6 +189,10 @@ table.order tr:hover {
   background-color: #eee;
 }
 
+table.order td:first-child {
+  text-align: left;
+}
+
 table.order td p {
   margin: 1px 0;
   padding: 0 10px;
@@ -243,6 +247,10 @@ table.orderdetails tr:hover {
 
 table.orderdetails td {
   padding: 5px 10px;
+}
+
+table.orderdetails td:first-child {
+  text-align: left;
 }
 
 table.orderdetails td:nth-child(3) {
