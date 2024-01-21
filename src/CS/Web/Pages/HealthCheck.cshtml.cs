@@ -21,7 +21,9 @@ public class HealthCheckModel : PageModel
     public async Task OnGet()
     {
         var httpClient = _httpClientFactory.CreateClient("API");
+
         var httpRequestMessageSql = new HttpRequestMessage(HttpMethod.Get, "GetProductCategory");
+        httpRequestMessageSql.Headers.Add("x-functions-key", _configuration.GetValue<string>("FUNCTION_KEY"));
 
         var responseSql = await httpClient.SendAsync(httpRequestMessageSql);
         if (responseSql.IsSuccessStatusCode)
@@ -36,6 +38,7 @@ public class HealthCheckModel : PageModel
         }
 
         var httpRequestMessageBlob = new HttpRequestMessage(HttpMethod.Get, "GetBlob");
+        httpRequestMessageBlob.Headers.Add("x-functions-key", _configuration.GetValue<string>("FUNCTION_KEY"));
 
         var responseBlob = await httpClient.SendAsync(httpRequestMessageBlob);
         if (responseBlob.IsSuccessStatusCode)
