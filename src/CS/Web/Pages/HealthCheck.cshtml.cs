@@ -35,7 +35,7 @@ public class HealthCheckModel : PageModel
             healthCheck.Add("SQL Database", "Invalid");
         }
 
-        var httpRequestMessageBlob = new HttpRequestMessage(HttpMethod.Get, "GetBlobs");
+        var httpRequestMessageBlob = new HttpRequestMessage(HttpMethod.Get, "GetBlob");
 
         var responseBlob = await httpClient.SendAsync(httpRequestMessageBlob);
         if (responseBlob.IsSuccessStatusCode)
