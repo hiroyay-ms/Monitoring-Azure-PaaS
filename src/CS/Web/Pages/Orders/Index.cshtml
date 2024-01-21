@@ -1,0 +1,53 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Sales Order";
+}
+@using Web.Models;
+
+<h2>Orders</h2>
+
+<br />
+
+<div>
+    <table class="order">
+        <thead>
+            <th width="250">order info:</th>
+            <th width="550">ship to:</th>
+            <th width="200">cost:</th>
+        </thead>
+
+        @foreach (var o in (List<SalesOrder>)ViewData["SalesOrders"])
+        {
+            <tr>
+                <td>
+                    <p class="heading">@o.CustomerName</p>
+                    <p><span class="subheading">account #: </span><span>@o.AccountNumber</span></p>
+                    <p><span class="subheading">order #: </span><span><a asp-page="SalesOrderDetail" asp-route-Id="@o.SalesOrderID">@o.SalesOrderNumber</a></span></p>
+                </td>
+                <td>
+                    <p>@o.AddressLine1, @o.City, @o.StateProvince @o.PostalCode</p>
+                    <p>
+                        <span class="subheading">via: </span>
+                        <span>@o.ShipMethod</span>
+                    </p>
+                    <p>
+                        <span class="subheading">on: </span>
+                        <span>
+                            @if (o.ShipDate.HasValue)
+                            {
+                                @o.ShipDate.Value.ToShortDateString()
+                            }
+                        </span>
+                    </p>
+                </td>
+                <td>
+                    <p><span class="subheading">subtotal :</span><span>$@o.SubTotal.ToString("N2")</span></p>
+                    <p><span class="subheading">tax: </span><span>$@o.TaxAmt.ToString("N2")</span></p>
+                    <p><span class="subheading">freight: </span><span>$@o.Freight.ToString("N2")</span></p>
+                    <p><span class="subheading">total: </span><span>$@o.TotalDue.ToString("N2")</span></p>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,13 +1,13 @@
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
 
-public class CloudRoleNameTelemetryInitializer : ITelemetryInitializer
+public class AppInsightsTelemetryInitializer : ITelemetryInitializer
 {
     public void Initialize(ITelemetry telemetry)
     {
         if (string.IsNullOrEmpty(telemetry.Context.Cloud.RoleName))
         {
-            telemetry.Context.Cloud.RoleName = "backend-api";
+            telemetry.Context.Cloud.RoleName = "frontend-ui";
         }
     }
 }

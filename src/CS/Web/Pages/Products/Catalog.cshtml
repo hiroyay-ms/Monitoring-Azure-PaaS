@@ -1,0 +1,52 @@
+@page
+@model CatalogModel
+@{
+    ViewData["Title"] = "Product Catalog";
+}
+@using Web.Models;
+
+<h2 class="productCatalog">Product Overview</h2>
+
+<br />
+
+<div>
+    <table class="catalog">
+        <thead>
+            <th width="40">Id</th>
+            <th width="300">Name</th>
+            <th width="200">Produc</th>
+            <th width="550">Model</th>
+            <th width="150">Sell Date</th>
+        </thead>
+
+        @foreach (var p in (List<Product>)ViewData["ProductList"])
+        {
+            <tr>
+                <td>@p.ProductID</td>
+                <td>
+                    <p>@p.ProductName</p>
+                    <img src="~/images/@p.ThumbnailPhotoFileName" alt="@p.ProductName" />
+                </td>
+                <td>
+                    <p><b>No.:</b>&nbsp;@p.ProductNumber</p>
+                    <p><b>Color:</b>&nbsp;@p.Color</p>
+                    <p><b>Size:</b>&nbsp;@p.Size</p>
+                    <p><b>Price:</b>&nbsp;$&nbsp;@p.ListPrice.ToString("N2")</p>
+                </td>
+                <td>
+                    <p><b>Model:</b>&nbsp;@p.ModelName</p>
+                    <p>@p.Description</p>
+                </td>
+                <td>
+                    <p><b>Start:</b>&nbsp;@p.SellStartDate.ToString("yyyy-MM-dd")</p>
+                    <p><b>End:</b>&nbsp;
+                        @if (p.SellEndDate != null)
+                        {
+                            @p.SellEndDate.Value.ToString("yyyy-MM-dd")
+                        }
+                    </p>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

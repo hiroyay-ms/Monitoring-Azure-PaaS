@@ -20,12 +20,7 @@ namespace Api
                 options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionString)
             );
 
-            builder.Services.AddApplicationInsightsTelemetry();
-            builder.Services.Configure<TelemetryConfiguration>( config =>
-                {
-                    config.TelemetryInitializers.Add(new AppInsightsTelemetryInitializer());
-                }
-            );
+            builder.Services.AddSingleton<ITelemetryInitializer, CloudRoleNameTelemetryInitializer>();
         }
     }
 }

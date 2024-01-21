@@ -1,0 +1,36 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Product Category";
+}
+@using Web.Models;
+
+<h2 class="productCategory">Product Category</h2>
+
+<div class="filter">
+    <a asp-page="Index" asp-route-Id="1">Bikes</a>
+    <a asp-page="Index" asp-route-Id="2">Components</a>
+    <a asp-page="Index" asp-route-Id="3">Clothing</a>
+    <a asp-page="Index" asp-route-Id="4">Accessories</a>
+</div>
+
+<div>
+    <table class="index">
+        <thead>
+            <th>Id</th>
+            <th>Category</th>
+            <th>SubCategory</th>
+            <th>Products</th>
+        </thead>
+
+        @foreach (var pc in (List<ProductCategory>)ViewData["ProductCategories"])
+        {
+            <tr>
+                <td><a asp-page="Catalog" asp-route-Id="@pc.ProductCategoryID">@pc.ProductCategoryID</a></td>
+                <td>@pc.Category</td>
+                <td>@pc.SubCategory</td>
+                <td><a asp-page="Catalog" asp-route-Id="@pc.ProductCategoryID">@pc.ProductCount</a></td>
+            </tr>
+        }
+    </table>
+</div>

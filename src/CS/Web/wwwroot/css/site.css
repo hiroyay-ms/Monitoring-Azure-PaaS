@@ -20,3 +20,252 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+h2.productCategory
+{
+  color: #00bcd4;
+}
+
+h2.productCatalog
+{
+  color: #00bcd4;
+}
+
+div.filter {
+  padding: 15px 0;
+}
+
+div.filter a {
+  display: inline-block;
+  width: 200px;
+  padding: 5px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background: #00bcd4;
+  color: #fff;
+  margin: 5px 0;
+  text-align: center;
+  text-decoration: none;
+}
+
+div.filter a:hover {
+  background: #fff;
+  color: #00bcd4;
+  border: 1px solid #00bcd4;
+}
+
+table.index {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+table.index thead {
+  border-bottom: 5px solid #00bcd4;
+}
+
+table.index th {
+  color: #00bcd4;
+}
+
+table.index tr {
+  border-bottom: solid 1px #ddd;
+}
+
+table.index tr:last-child {
+  border-bottom: 2px solid #00bcd4;
+}
+
+table.index tr:hover {
+  background-color: #00bcd4;
+  color: white;
+}
+
+table.index tr:hover a {
+  color: white;
+  font-weight: bold;
+}
+
+table.index th, td {
+  text-align: left;
+  padding: 15px 5px;
+}
+
+table.index th:first-child {
+  text-align: center;
+}
+
+table.index td:first-child {
+  text-align: center;
+}
+
+table.catalog {
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: block;
+  overflow-y: scroll;
+  height: calc(100vh*0.8)
+}
+
+table.catalog thead th {
+  background-color: #00bcd4;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+table.catalog th:first-child {
+  border-radius: 5px 0 0 0;
+  text-align: center;
+}
+
+table.catalog th:last-child {
+  border-radius: 0 5px 0 0;
+  text-align: left;
+}
+
+table.catalog tr {
+  border-bottom: solid 1px #ddd;
+}
+
+table.catalog tr:hover {
+  background-color: #eee;
+}
+
+table.catalog td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+table.catalog td p {
+  margin: 1px 0;
+}
+
+table.catalog td:first-child {
+  text-align: center;
+}
+
+table.catalog td:last-child {
+  text-align: left;
+}
+
+table.catalog td:nth-child(2) p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00bcd4;
+  margin: 1px;
+}
+
+table.order {
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: block;
+  overflow-y: scroll;
+  height: calc(100vh*0.8)
+}
+
+table.order thead th {
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #fff;
+  border-bottom: 5px solid #ccc;
+}
+
+table.order tr {
+  border-bottom: solid 1px #ddd;
+}
+
+table.order tr:last-child {
+  border-bottom: 5px solid #ccc;
+}
+
+table.order tr:hover {
+  background-color: #eee;
+}
+
+table.order td:first-child {
+  text-align: left;
+}
+
+table.order td p {
+  margin: 1px 0;
+  padding: 0 10px;
+}
+
+table.order td p.heading {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+table.order td p span.subheading {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+table.orderdetails {
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: block;
+  overflow-y: scroll;
+  height: calc(100vh*0.8)
+}
+
+table.orderdetails thead th {
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #333;
+  color: #fff;
+}
+
+table.orderdetails th:nth-child(3) {
+  text-align: center;
+}
+
+table.orderdetails th:nth-child(4), th:nth-child(5), th:nth-child(6) {
+  text-align: right;
+}
+
+table.orderdetails tr {
+  border-bottom: solid 1px #ddd;
+}
+
+table.orderdetails tr:last-child {
+  border-bottom: 5px solid #ddd;
+}
+
+table.orderdetails tr:hover {
+  background-color: #eee;
+}
+
+table.orderdetails td {
+  padding: 5px 10px;
+}
+
+table.orderdetails td:first-child {
+  text-align: left;
+}
+
+table.orderdetails td:nth-child(3) {
+  text-align: center;
+}
+
+table.orderdetails td:nth-child(4), td:nth-child(5), td:nth-child(6) {
+  text-align: right;
+}
+
+table.status {
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: block;
+}
+
+table.status tr {
+  border-bottom: solid 1px #ddd;
+}

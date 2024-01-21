@@ -1,0 +1,35 @@
+@page
+@model SalesOrderDetailModel
+@{
+    ViewData["Title"] = "Sales Order";
+}
+@using Web.Models;
+
+<h2>Order Details - #SO<span>@Model.Id</span></h2>
+
+<br />
+
+<div>
+    <table class="orderdetails">
+        <thead>
+            <th width="300">Product</th>
+            <th width="200">Category</th>
+            <th width="100">Quantity</th>
+            <th width="150">Unit Price</th>
+            <th width="150">Discount</th>
+            <th width="200">Total</th>
+        </thead>
+
+        @foreach (var sod in (List<SalesOrderDetail>)ViewData["SalesOrderDetails"])
+        {
+            <tr>
+                <td>@sod.ProductName</td>
+                <td>@sod.CategoryName</td>
+                <td>@sod.OrderQty</td>
+                <td>$@sod.UnitPrice.ToString("N2")</td>
+                <td>$@sod.UnitPriceDiscount.ToString("N2")</td>
+                <td>$@sod.LineTotal.ToString("N2")</td>
+            </tr>
+        }
+    </table>
+</div>
