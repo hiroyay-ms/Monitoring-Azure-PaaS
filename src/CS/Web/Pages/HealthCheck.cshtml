@@ -8,22 +8,13 @@
 
 <div>
     <table class="status">
-
-        @foreach (KeyValuePair<string, string> item in (Dictionary<string, string>)ViewData["HealthCheck"])
-            {
-                <tr>
-                    @if (@item.Value == "OK")
-                    {
-                        <td><img src="~/images/IconLightStatusOK.png" alt="" /></td>
-                        <td>Connect function app to @item.Key is OK</td>
-                    }
-                    else
-                    {
-                        <td><img src="~/images/IconLightStatusInvalid.png" alt="" /></td>
-                        <td>Connect function app to @item.Key is Invalid</td>
-                    }
-                </tr>
-            }
-
+        <tr>
+            <td><img src="~/images/IconLightStatusOK.png" alt="" /></td>
+            <td>Connect function app to SQL Database is OK</td>
+        </tr>
+        <tr>
+            <td><img src="~/images/IconLightStatusOK.png" alt="" /></td>
+            <td>Connect function app to Azure Storage is OK</td>
+        <tr>
     </table>
 </div>

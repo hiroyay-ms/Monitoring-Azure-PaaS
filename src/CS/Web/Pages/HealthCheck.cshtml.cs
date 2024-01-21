@@ -20,19 +20,19 @@ public class HealthCheckModel : PageModel
 
     public async Task OnGet()
     {
-        Dictionary<string, string> healthCheck = new Dictionary<string, string>();
-
         var httpClient = _httpClientFactory.CreateClient("API");
         var httpRequestMessageSql = new HttpRequestMessage(HttpMethod.Get, "GetProductCategory");
 
         var responseSql = await httpClient.SendAsync(httpRequestMessageSql);
         if (responseSql.IsSuccessStatusCode)
         {
-            healthCheck.Add("SQL Database", "OK");
+            _logger.LogInformation("Connect function app to SQL Database is OK");
         }
         else
         {
-            healthCheck.Add("SQL Database", "Invalid");
+            _logger.LogError("Connect function app to SQL Database is Invalid");
+
+            throw new Exception("Connect function app to SQL Database is Invalid");
         }
 
         var httpRequestMessageBlob = new HttpRequestMessage(HttpMethod.Get, "GetBlob");
@@ -40,13 +40,13 @@ public class HealthCheckModel : PageModel
         var responseBlob = await httpClient.SendAsync(httpRequestMessageBlob);
         if (responseBlob.IsSuccessStatusCode)
         {
-            healthCheck.Add("Blob Storage", "OK");
+            _logger.LogInformation("Connect function app to Blob Storage is OK");
         }
         else
         {
-            healthCheck.Add("Blob Storage", "Invalid");
-        }
+            _logger.LogError("Connect function app to Blob Storage is Invalid");
 
-        ViewData["HealthCheck"] = healthCheck;
+            throw new Exception("Connect function app to Blob Storage is Invalid");
+        }
     }
 }
