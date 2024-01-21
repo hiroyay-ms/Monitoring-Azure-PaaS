@@ -259,3 +259,13 @@ table.orderdetails td:nth-child(3) {
 table.orderdetails td:nth-child(4), td:nth-child(5), td:nth-child(6) {
   text-align: right;
 }
+
+table.status {
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: block;
+}
+
+table.status tr {
+  border-bottom: solid 1px #ddd;
+}

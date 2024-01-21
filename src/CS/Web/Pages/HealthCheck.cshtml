@@ -1,0 +1,29 @@
+@page
+@model HealthCheckModel
+@{
+    ViewData["Title"] = "Health Check";
+}
+
+<h2 class="productCategory">Status</h2>
+
+<div>
+    <table class="status">
+
+        @foreach (KeyValuePair<string, string> item in (Dictionary<string, string>)ViewData["HealthCheck"])
+            {
+                <tr>
+                    @if (@item.Value == "OK")
+                    {
+                        <td><img src="~/images/IconLightStatusOK.png" alt="" /></td>
+                        <td>Connect function app to @item.Key is OK</td>
+                    }
+                    else
+                    {
+                        <td><img src="~/images/IconLightStatusInvalid.png" alt="" /></td>
+                        <td>Connect function app to @item.Key is Invalid</td>
+                    }
+                </tr>
+            }
+
+    </table>
+</div>

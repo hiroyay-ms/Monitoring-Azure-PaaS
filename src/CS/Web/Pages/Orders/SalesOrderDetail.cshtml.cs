@@ -24,7 +24,7 @@ public class SalesOrderDetailModel : PageModel
 
     public async Task OnGet()
     {
-        List<SalesOrderDetail> salesOrderDetails = new List<SalesOrderDetail>();
+        List<SalesOrderDetail>? salesOrderDetails = new List<SalesOrderDetail>();
         string jsonString = string.Empty;
 
         if (string.IsNullOrEmpty(Id))

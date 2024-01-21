@@ -25,7 +25,7 @@ public class  IndexModel : PageModel
 
     public async Task OnGet()
     {
-        List<ProductCategory> productCategories = new List<ProductCategory>();
+        List<ProductCategory>? productCategories = new List<ProductCategory>();
         string jsonString = string.Empty;
 
         string functionName = "GetProductCategory";

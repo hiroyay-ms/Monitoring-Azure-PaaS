@@ -24,7 +24,7 @@ public class CatalogModel : PageModel
 
     public async Task OnGet()
     {
-        List<Product> products = new List<Product>();
+        List<Product>? products = new List<Product>();
         string jsonString = string.Empty;
 
         if (string.IsNullOrEmpty(Id))

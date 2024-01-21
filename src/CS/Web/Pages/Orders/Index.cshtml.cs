@@ -21,7 +21,7 @@ public class IndexModel : PageModel
 
     public async Task OnGet()
     {
-        List<SalesOrder> orders = new List<SalesOrder>();
+        List<SalesOrder>? orders = new List<SalesOrder>();
         string jsonString = string.Empty;
 
         string functionName = "GetSalesOrder";
