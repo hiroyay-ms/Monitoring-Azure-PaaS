@@ -120,7 +120,7 @@ Log Analytics Workspace, Storage Account x2, Azure Functions Premium, Web Apps, 
 
 Disabled public access (Storage Account, Azure Functions, Web Apps)
 
-Adding disgnostics settings (Azure Functions, Web App, SQL Database)
+Adding disgnostics settings (Azure Functions, Web App, SQL Database, Blob service)
 
 Deploy Azure Front Door Premium
 
