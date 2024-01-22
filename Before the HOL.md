@@ -118,13 +118,13 @@ Azure Front Door Premium の展開
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhiroyay-ms%2FMonitoring-Azure-PaaS%2Fmain%2Ftemplates%2Fupdate-resources.json)
 
-    ### パラメーター
+### パラメーター
 
-    - **storageAccountName**: リソース展開時に指定したストレージ アカウント名
+- **storageAccountName**: リソース展開時に指定したストレージ アカウント名
 
-    - **functionStorage**: リソース展開時に指定したストレージ アカウント名 (Azure Functions 用)
+- **functionStorage**: リソース展開時に指定したストレージ アカウント名 (Azure Functions 用)
 
-    - **baseResourceName**: リソース展開時に指定したベースの名前
+- **baseResourceName**: リソース展開時に指定したベースの名前
 
 <br />
 
