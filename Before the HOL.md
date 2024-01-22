@@ -12,7 +12,17 @@ Jan. 2024
 
 <br />
 
+### 事前準備環境
+
+<img src="images/prep-environment.png" />
+
+<br />
+
 ### リソースの展開
+
+Virtual Network (Subnet x3), Network Security Group x3, Private DNS Zone x4 (Blob, Files, SQL, Web sites),
+Private Endpoint x5 (Blob x2, Files, SQL Server, Azure Functions),
+Log Analytics Workspace, Storage Account x2, Azure Functions Premium, Web Apps, Application Insights, SQL Database
 
 <br />
 
@@ -108,11 +118,11 @@ Jan. 2024
 
 ### リソースの更新
 
-ストレージ アカウント、Azure Functions、Web App のパブリック アクセスを無効
+Disabled public access (Storage Account, Azure Functions, Web Apps)
 
-Azure Functions、Web App、SQL Database の診断設定を作成
+Adding disgnostics settings (Azure Functions, Web App, SQL Database)
 
-Azure Front Door Premium の展開
+Deploy Azure Front Door Premium
 
 <br />
 
