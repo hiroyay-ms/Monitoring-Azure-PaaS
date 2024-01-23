@@ -5,17 +5,17 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="ユーザー定義変数">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
-      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ThreadGroup_Products">
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="ループコントローラ">
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">5</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">60</stringProp>
+        <stringProp name="ThreadGroup.num_threads">50</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">600</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">180</stringProp>
+        <stringProp name="ThreadGroup.duration">3600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
@@ -207,10 +207,10 @@
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="ループコントローラ">
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">3</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">30</stringProp>
+        <stringProp name="ThreadGroup.num_threads">30</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">600</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">120</stringProp>
+        <stringProp name="ThreadGroup.duration">3600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
