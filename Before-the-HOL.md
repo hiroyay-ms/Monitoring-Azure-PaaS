@@ -173,3 +173,59 @@ Deploy Azure Front Door Premium, Load Testing
     - **Sales Orders**
 
       <img src="images/webapp-3.png" />
+
+<br />
+
+### ロードテスト
+
+- JMeter スクリプト ファイルの準備
+
+  - [スクリプトファイル](https://github.com/hiroyay-ms/Monitoring-Azure-PaaS/blob/main/loadtest/loadtest.jmx) をダウンロード
+
+    <img src="images/loadtest-1.png" />
+  
+  - ダウンロードしたファイルをエディターで開き、**{AfdEndpoints}** を使用する Front Door のエンドポイント名に変更
+
+    ※スクリプト ファイルには２つのスレッド グループを記述
+
+    ※既定のスレッド数やスケジューラ設定は以下 (設定内容は変更可)
+
+      - **スレッド グループ**: ThreadGroup_Products
+
+        - **スレッド数 (num_threads)**: 50
+
+        - **Ramp-Up 期間 (ramp_time)**: 600
+
+        - **持続期間 (duration)**: 1800
+
+      - **スレッド グループ**: ThreadGroup_Orders
+
+        - **スレッド数 (num_threads)**: 30
+
+        - **Ramp-Up 期間 (ramp_time)**: 600
+
+        - **持続期間 (duration)**: 1800
+
+<br />
+
+- テストの実行
+
+  - Azure Load Testing 管理ブレードの **テスト** を選択
+
+  - **作成** ‐ **JMeter スクリプトのアップロード** を選択
+
+    <img src="images/loadtest-2.png" />
+  
+  - **Basics**
+
+    - **テスト名**: 任意
+  
+    - **作成後にテストを実行する**: オン
+
+  - **テスト計画**
+
+    - **ファイルの選択** で使用する JMeter スクリプト ファイルを選択し **アップロード** をクリック
+  
+  - あとは既定の設定で **確認および作成** をクリック
+
+  - **作成** をクリックしてテストを実行
