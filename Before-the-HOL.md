@@ -122,7 +122,7 @@ Disabled public access (Storage Account, Azure Functions, Web Apps)
 
 Adding disgnostics settings (Azure Functions, Web App, SQL Database, Blob service)
 
-Deploy Azure Front Door Premium
+Deploy Azure Front Door Premium, Load Testing
 
 <br />
 

@@ -32,7 +32,8 @@
         "webAppDiagnostics": "[concat('diag-', variables('webAppName'))]",
         "functionAppDiagnostic": "[concat('diag-', variables('functionName'))]",
         "frontDoorName": "[concat('afd-', parameters('baseResourceName'))]",
-        "frontDoorDiagnostics": "[concat('diag-', variables('frontDoorName'))]"
+        "frontDoorDiagnostics": "[concat('diag-', variables('frontDoorName'))]",
+        "loadtestingWorkspace": "[concat('lt-', parameters('baseResourceName'))]"
     },
     "resources": [
         {
@@ -381,6 +382,13 @@
                     }
                 ]
             }
+        },
+        {
+            "type": "Microsoft.LoadTestService/loadtests",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[variables('loadtestingWorkspace')]",
+            "location": "[resourceGroup().location]",
+            "properties": {}
         }
     ],
     "outputs": {}
