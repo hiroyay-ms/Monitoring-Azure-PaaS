@@ -99,6 +99,45 @@
             }
         },
         {
+              "type": "Microsoft.Sql/servers/databases/auditingPolicies",
+              "apiVersion": "2014-04-01",
+              "name": "[concat(variables('sqlServerName'), '/AdventureWorksLT/Default')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "auditingState": "Disabled"
+              }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/auditingSettings",
+            "apiVersion": "2023-05-01-preview",
+            "name": "[concat(variables('sqlServerName'), '/AdventureWorksLT/Default')]",
+            "properties": {
+                "retentionDays": 0,
+                "auditActionsAndGroups": [
+                    "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP",
+                    "FAILED_DATABASE_AUTHENTICATION_GROUP",
+                    "BATCH_COMPLETED_GROUP"
+                ],
+                "isAzureMonitorTargetEnabled": true,
+                "state": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/extendedAuditingSettings",
+            "apiVersion": "2023-05-01-preview",
+            "name": "[concat(variables('sqlServerName'), '/AdventureWorksLT/Default')]",
+            "properties": {
+                "retentionDays": 0,
+                "auditActionsAndGroups": [
+                    "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP",
+                    "FAILED_DATABASE_AUTHENTICATION_GROUP",
+                    "BATCH_COMPLETED_GROUP"
+                ],
+                "isAzureMonitorTargetEnabled": true,
+                "state": "Enabled"
+            }
+        },
+        {
             "type": "Microsoft.Insights/diagnosticSettings",
             "apiVersion": "2021-05-01-preview",
             "name": "[variables('blobStorageDiagnostics')]",

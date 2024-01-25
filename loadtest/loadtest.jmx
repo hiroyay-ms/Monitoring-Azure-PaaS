@@ -105,6 +105,21 @@
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           </HTTPSamplerProxy>
           <hashTree/>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="productid_eq_6">
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(toInteger(&quot;${productId}&quot;)==6)}</stringProp>
+          </IfController>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NotFoundRequest">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="ユーザー定義変数">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.path">/Privacy</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
         </hashTree>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Components">
           <boolProp name="IfController.useExpression">true</boolProp>
@@ -132,6 +147,21 @@
               </collectionProp>
             </elementProp>
             <stringProp name="HTTPSampler.path">/Products/Catalog</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="productid_eq_20">
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(toInteger(&quot;${productId}&quot;)==20)}</stringProp>
+          </IfController>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Status500InternalServerError">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="ユーザー定義変数">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.path">/Status500</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -520,6 +550,11 @@
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
+        <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="GaussianRandomTimer">
+          <stringProp name="ConstantTimer.delay">3000</stringProp>
+          <stringProp name="RandomTimer.range">1000</stringProp>
+        </GaussianRandomTimer>
+        <hashTree/>
       </hashTree>
     </hashTree>
   </hashTree>
