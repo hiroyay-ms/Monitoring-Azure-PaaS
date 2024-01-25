@@ -20,9 +20,9 @@ Jan. 2024
 
 ### リソースの展開
 
-Virtual Network (Subnet x3), Network Security Group x3, Private DNS Zone x4 (Blob, Files, SQL, Web sites),
-Private Endpoint x5 (Blob x2, Files, SQL Server, Azure Functions),
-Log Analytics Workspace, Storage Account x2, Azure Functions Premium, Web Apps, Application Insights, SQL Database
+Virtual Network (Subnet x3), Network Security Group x3, Private DNS Zone x4 (Blob, Files, SQL, Web sites),  
+Private Endpoint x5 (Blob x2, Files, SQL Server, Azure Functions),  
+Log Analytics Workspace, Storage Account x2, Azure Functions Premium, Web Apps, Application Insights, SQL Database  
 
 <br />
 
@@ -118,10 +118,8 @@ Log Analytics Workspace, Storage Account x2, Azure Functions Premium, Web Apps, 
 
 ### リソースの更新
 
-Disabled public access (Storage Account, Azure Functions, Web Apps)
-
-Adding disgnostics settings (Azure Functions, Web App, SQL Database, Blob service)
-
+Disabled public access (Storage Account, Azure Functions, Web Apps)  
+Adding disgnostics settings (Azure Functions, Web App, SQL Database, Blob service)  
 Deploy Azure Front Door Premium, Load Testing
 
 <br />
