@@ -26,10 +26,13 @@
         "logAnalyticsWorkspace": "[concat('log-', parameters('baseResourceName'))]",
         "functionName": "[concat('func-', parameters('baseResourceName'))]",
         "webAppName": "[concat('app-', parameters('baseResourceName'))]",
+        "webAppHostingPlanName": "[concat('plan-', variables('webAppName'))]",
         "sqlServerName": "[concat('sql-', parameters('baseResourceName'))]",
         "sqlDatabaseDiagnostics": "[concat('diag-', variables('sqlServerName'), '-AdventureWorksLT')]",
+        "storageAccountDiagnostics": "[concat('diag-', parameters('storageAccountName'))]",
         "blobStorageDiagnostics": "[concat('diag-', parameters('storageAccountName'), '-blob')]",
         "webAppDiagnostics": "[concat('diag-', variables('webAppName'))]",
+        "webAppPlanDiagnostics": "[concat('diag-', variables('webAppHostingPlanName'))]",
         "functionAppDiagnostic": "[concat('diag-', variables('functionName'))]",
         "frontDoorName": "[concat('afd-', parameters('baseResourceName'))]",
         "frontDoorDiagnostics": "[concat('diag-', variables('frontDoorName'))]",
@@ -140,6 +143,22 @@
         {
             "type": "Microsoft.Insights/diagnosticSettings",
             "apiVersion": "2021-05-01-preview",
+            "name": "[variables('storageAccountDiagnostics')]",
+            "scope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+            "properties": {
+                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]",
+                "logAnalyticsDestinationType": "Dedicated",
+                "metrics": [
+                    {
+                        "category": "Transaction",
+                        "enabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Insights/diagnosticSettings",
+            "apiVersion": "2021-05-01-preview",
             "name": "[variables('blobStorageDiagnostics')]",
             "scope": "[format('Microsoft.Storage/storageAccounts/{0}/blobServices/{1}', parameters('storageAccountName'), 'default')]",
             "properties": {
@@ -197,6 +216,22 @@
                         "enabled": true
                     }
                 ],
+                "metrics": [
+                    {
+                        "category": "AllMetrics",
+                        "enabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Insights/diagnosticSettings",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[variables('webAppPlanDiagnostics')]",
+            "scope": "[resourceId('Microsoft.Web/serverfarms', variables('webAppHostingPlanName'))]",
+            "properties": {
+                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]",
+                "logAnalyticsDestinationType": "Dedicated",
                 "metrics": [
                     {
                         "category": "AllMetrics",
