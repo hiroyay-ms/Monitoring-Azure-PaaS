@@ -736,7 +736,7 @@ Jan. 2024
   | project TimeGen, CsUriStem, ScStatus, ResultDescription
   ```
 
-  ※エラー発生時のコンソール ログを取得
+  ※テーブルを統合し HTTP ステータス コード 500 が発生した際のコンソール ログを取得
 
 <br />
 
@@ -878,7 +878,126 @@ Jan. 2024
 
 <br />
 
-## Exercise 5: ストレージ アカウントの監視
+## Exercise 5: Azure Front Door でのメトリックとログの監視
+
+### Task 1: 組み込みレポートによるトラフィックとセキュリティ関連情報の確認
+
+- Azure Front Door 管理ブレードへ移動、左側のメニューから **レポート** を選択
+
+- 利用状況やアクセス上位の URL を確認
+
+  **利用状況**
+
+  <img src="images/afd-report-01.png" />
+
+  <br />
+
+  **上位 URL 件**
+
+  <img src="images/afd-report-02.png" />
+
+  ※上部のフィルターでレポートに表示する期間などを選択可
+
+<br />
+
+- 管理ブレードの左側のメニューから **セキュリティ レポート** を選択
+
+- WAF の主要メトリックに関する情報を確認
+
+  <img src="images/afd-security-report-01.png" />
+
+  ※セキュリティ レポートは Front Door Premium でのみ利用可
+
+<br />
+
+### Task 2: ログの確認
+
+- 管理ブレードの左側のメニューから **ログ** を選択
+
+- クエリを使用し、アクセス ログを取得
+
+  ```
+  AzureDiagnostics
+  | where ResourceProvider == "MICROSOFT.CDN" and Category == "FrontDoorAccessLog"
+  ```
+
+  <img src="images/afd-access-log-01.png" />
+
+<br />
+
+- 日ごとのアクセス数をアクセス元ごとに集計
+
+  ```
+  AzureDiagnostics
+  | where ResourceProvider == "MICROSOFT.CDN" and Category == "FrontDoorAccessLog"
+  | summarize count() by bin(TimeGenerated, 1d), clientCountry_s
+  ```
+
+  <img src="images/afd-access-log-02.png" />
+
+<br />
+
+- WAF ログを取得
+
+  ```
+  AzureDiagnostics 
+  | where ResourceProvider == "MICROSOFT.CDN" and Category == "FrontDoorWebApplicationFirewallLog" 
+  ```
+
+  <img src="images/afd-firewall-log-01.png" />
+
+  <br />
+
+- Front Door WAF で処理した１日の要求数をルールごとにカウント
+
+  ```
+  AzureDiagnostics
+  | where ResourceProvider == "MICROSOFT.CDN" and Category == "FrontDoorWebApplicationFirewallLog"
+  | summarize count() by bin(TimeGenerated, 1d), action_s, ruleName_s
+  ```
+
+  <img src="images/afd-firewall-log-02.png" />
+
+  <br />
+
+- SQL インジェクション攻撃と検出されたログの詳細を確認
+
+  ```
+  AzureDiagnostics 
+  | where ResourceProvider == "MICROSOFT.CDN" and Category == "FrontDoorWebApplicationFirewallLog" 
+  | where ruleName_s == 'Microsoft_DefaultRuleSet-2.1-SQLI-942310'
+  ```
+
+  <img src="images/afd-firewall-log-03.png" />
+
+  <br />
+
+- Front Door WAF でブロックした要求数を１時間ごとに集計し時系列に表示
+
+  ```
+  AzureDiagnostics
+  | where action_s == 'Block'
+  | make-series num=count() default=0 on TimeGenerated from now(-1d) to now() step 1h
+  | render timechart 
+  ```
+
+  <img src="images/afd-firewall-log-04.png" />
+
+  <br />
+
+### 参考情報
+
+- [Azure Front Door のレポート](https://learn.microsoft.com/ja-jp/azure/frontdoor/standard-premium/how-to-reports?tabs=traffic-by-domain)
+
+- [Front Door でのメトリックとログの監視](https://learn.microsoft.com/ja-jp/azure/frontdoor/front-door-diagnostics?pivots=front-door-standard-premium)
+
+- [Front Door 監査およびログ記録](https://learn.microsoft.com/ja-jp/azure/web-application-firewall/afds/waf-front-door-monitor?pivots=front-door-standard-premium)
+
+- [Web Application Firewall の DRS および CRS の規則グループと規則](https://learn.microsoft.com/ja-jp/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules?tabs=drs21)
+
+<br />
+
+## Exercise 6: ストレージ アカウントの監視
 
 ### Task 1: 分析サービスを使用したストレージ サービスの監視
 
@@ -947,7 +1066,7 @@ Jan. 2024
 
 <br />
 
-## Exercise 6: SQL Database の監視
+## Exercise 7: SQL Database の監視
 
 ### Task 1: リソース消費が大きく、長時間実行されるクエリの特定
 
@@ -1270,3 +1389,387 @@ Jan. 2024
 - [SQL Database 監査ログの形式](https://learn.microsoft.com/ja-jp/azure/azure-sql/database/audit-log-format?view=azuresql)
 
 <br />
+
+## Exercise 8: データ保持とアーカイブ
+
+### Task 1: Log Analytics ワークスペースの管理
+
+- Log Analytics ワークスペースの管理ブレードへ移動、**使用量と推定コスト** を選択
+
+  <img src="images/log-usage-and-cost.png" />
+
+- **データ保有期間** をクリック
+
+- 任意の期間を選択し **OK** をクリック
+
+  <img src="images/log-retension-period.png" />
+
+  ※データ保持の既定値は 30, 31, 60, 90, 120, 180, 270, 365, 550, 730 日から設定可
+
+- 管理ブレードの左側のメニューから **分析情報** を選択
+
+- **概要**、**使用状況** タブで、テーブルごとのデータ量やインジェスト量を確認
+
+  ※画面上部で時間範囲の選択可
+
+  **概要**
+
+  <img src="images/log-analysis-01.png" />
+
+  **使用状況**
+
+  <img src="images/log-analysis-02.png" />
+
+- 管理ブレードの左側のメニューから **テーブル** を選択
+
+- 任意のテーブルの **...** をクリックし **テーブルの管理** を選択
+
+  <img src="images/log-archiving-01.png" />
+
+- データ保持期間を設定
+
+  - **データ保持設定**
+
+    - **ワークスペースの設定**: 既定のワークスペース設定を使用をオフ
+
+    - **対話型の保持**: 30 日
+
+    - **保持期間の合計**: 3 年
+
+    <img src="images/log-archiving-02.png" />
+
+- **保存** をクリックして設定を反映
+
+<br />
+
+### 参考情報
+
+- [Azure Monitor ログでのデータ保持とアーカイブ](https://learn.microsoft.com/ja-jp/azure/azure-monitor/logs/data-retention-archive?tabs=portal-1%2Cportal-2)
+
+<br />
+
+## Exercise 9: Azure Monitor ブックの管理
+
+### Task 1: Azure ブックのカスタマイズ
+
+- Azure Monitor 管理ブレードの左側のメニューから **ブック** を選択
+
+- ギャラリーに表示されるテンプレートから **ストレージ アカウントの概要** をクリック
+
+  <img src="images/azure-book-gallery.png" />
+
+  ※グリッドでストレージ アカウントの様々なメトリックを表示
+
+- 一時ブックが作成され、テンプレートで指定された内容が表示
+
+  <img src="images/storage-account-book-01.png" />
+
+- **保存** をクリック
+
+  <img src="images/storage-account-book-08.png" />
+
+- リソース グループを選択し **適用** をクリック
+
+  <img src="images/storage-account-book-09.png" />
+
+- **ブック** メニューに戻り、**最近の変更 ブック** に保存したブックが表示
+
+  <img src="images/storage-account-book-10.png" />
+
+- 保存したブックを選択し **編集** をクリック
+
+  <img src="images/storage-account-book-02.png" />
+
+- グリッドが表示されていグループの **編集** をクリック
+
+  <img src="images/storage-account-book-03.png" />
+
+- グリッドが表示されているパーツの **編集** をクリック
+
+  <img src="images/storage-account-book-04.png" />
+
+- **列の設定** をクリック
+
+  <img src="images/storage-account-book-05.png" />
+
+- **microsoft.storage/storageaccounts-Transaction-Transactions$|Transactions$** 列を選択し、**列の非表示** をクリック
+
+  <img src="images/storage-account-book-06.png" />
+
+- **保存して閉じる** をクリック
+
+- トランザクション列が非表示になったことを確認し **編集完了** をクリック
+
+  <img src="images/storage-account-book-07.png" />
+
+- **保存** をクリック
+
+  <img src="images/storage-account-book-08.png" />
+
+- 再度 **編集** をクリックし、**設定** を選択
+
+  <img src="images/storage-account-book-11.png" />
+
+- **バージョン** タブで最初に保存したブックを選択し **表示** をクリック
+
+  <img src="images/storage-account-book-12.png" />
+
+- 変更前のブックが表示
+
+  <img src="images/storage-account-book-13.png" />
+
+- 右上の **×** をクリック、**設定** の **バージョン** タブから **比較** をクリック
+
+  <img src="images/storage-account-book-14.png" />
+
+- JSON 形式で以前のバージョンと最後に保存したバージョンを比較
+
+  <img src="images/storage-account-book-15.png" />
+
+  ※以前のバージョンは 90 日間使用可
+
+- 右上の **×** をクリック、**設定** の **キャンセル** をクリック
+
+- **編集完了** をクリック
+
+<br />
+
+### 参考情報
+
+- [Azure Monitor ブックの管理](https://learn.microsoft.com/ja-jp/azure/azure-monitor/visualize/workbooks-manage)
+
+<br />
+
+### Task 2: Azure ブックの作成
+
+- **ブック** の **＋ 新規** をクリック
+
+  <img src="images/create-workbook-01.png" />
+
+- 空白のキャンバスが表示、**＋ 追加** ‐ **パラメーターの追加** をクリック
+
+  <img src="images/create-workbook-02.png" />
+
+- **パラメーターの追加** をクリック
+
+  <img src="images/create-workbook-03.png" />
+
+- **新しいパラメーター**
+
+  - **パラメーター名**: TimeRange
+
+  - **表示名**: 時間範囲
+
+  - **パラメーターの型**: 時間の範囲の選択
+
+  - **必要？**: オン
+
+  - **使用可能な時間の範囲**
+
+    - 任意の項目を選択
+
+    <img src="images/create-workbook-04.png" />
+
+    ※例では 過去 30 分、過去 時間、過去 12 時間、過去 24 時間、過去 3 日、過去 7 日、過去 30 日、過去 60 日 を選択
+
+- **保存** をクリック
+
+- 初期値として **過去 24 時間** を選択し、**編集完了** をクリック
+
+- **追加** ‐ **グループの追加** を選択
+
+  <img src="images/create-workbook-06.png" />
+
+- グループ内の **追加** ‐ **テキストの追加** を選択
+
+  <img src="images/create-workbook-07.png" />
+
+- Markdown テキストを入力し **編集完了** をクリック
+
+  ```
+  ## アプリケーションの利用状況
+  ```
+
+  <img src="images/create-workbook-08.png" />
+
+- グループ内の **追加** ‐ **メトリックの追加** を選択
+
+- パラメーターを選択
+
+  - **データ ソース**: ログ
+
+  - **リソースの種類**: Application Insights
+
+  - **Application Insights**: ワークショップで使用中の Application Insights を選択
+
+    ※リソースが表示されない場合は、**すべてのサブスクリプションを読み込みます** を選択
+
+  - **時間範囲**: 時間範囲のパラメーターを選択
+
+  - **時間の細分性**: 自動
+
+  - **視覚化**: グリッド
+
+  - **形式**: リソースごとの行
+
+  - **サイズ**: 最小
+
+    <img src="images/create-workbook-09.png" />
+
+- **メトリックの追加** をクリックし、**Server response time** を選択、**保存** をクリック
+
+  <img src="images/create-workbook-10.png" />
+
+
+- 選択したメトリックが追加
+
+  <img src="images/create-workbook-11.png" />
+
+- 同様の操作を繰り返し、下記のメトリックを追加
+
+  **Server requests**, **Availability**, **Failed requests**
+
+- **メトリックの実行** をクリック
+
+  <img src="images/create-workbook-12.png" />
+
+- 指定したメトリックの値を取得して表示、**列の設定** をクリック
+
+  <img src="images/create-workbook-13.png" />
+
+- **列の設定の編集**
+
+  - **Name** 列を非表示に設定
+
+    <img src="images/create-workbook-14.png" />
+  
+  - **microsoft.insights/components/kusto-Server-requests/duration Timeline** の列レンダラーを **Spark 領域** に変更
+
+    <img src="images/create-workbook-15.png" />
+  
+- **保存して閉じる** をクリック
+
+- 列幅を調整し、再度 **列の設定** をクリック
+
+  <img src="images/create-workbook-16.png" />
+
+- 表示する列の **列のカスタム幅** で **現在の幅** をクリック
+
+  <img src="images/create-workbook-17.png" />
+
+  ※GUI で調整した列幅に固定
+
+- **保存して閉じる** をクリック
+
+- グループの **編集完了** をクリック
+
+  <img src="images/create-workbook-18.png" />
+
+- **＋ 追加** ‐ **グループの追加** をクリック
+
+  <img src="images/create-workbook-19.png" />
+
+- **＋ 追加** ‐ **クエリの追加** を選択
+
+- パラメーターを選択
+
+  - **データ ソース**: ログ
+
+  - **リソースの種類**: App Service
+
+  - **App Service**: ワークショップで使用中の App Service
+
+  - **時間範囲**: クエリに設定
+
+  - **視覚化**: クエリごとに設定
+
+  - **サイズ**: 小
+
+    <img src="images/create-workbook-20.png" />
+
+- クエリを記述、**クエリの実行** をクリックし、結果を確認
+
+  ```
+  AppServiceHTTPLogs
+  | where ScStatus != 200
+  | make-series num=count() default=0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step 1h by tostring(ScStatus)
+  | render columnchart with (kind=unstacked)
+  ```
+
+  ※時間範囲をブックに追加したパラメーターで指定
+
+  <img src="images/create-workbook-21.png" />
+
+- **編集完了** をクリック
+
+- グループ内の **追加** ‐ **クエリの追加** を選択
+
+- パラメーターを選択
+
+  - **データ ソース**: ログ
+
+  - **リソースの種類**: App Service
+
+  - **App Service**: ワークショップで使用中の App Service
+
+  - **時間範囲**: クエリに設定
+
+  - **視覚化**: グリッド
+
+  - **サイズ**: 小
+
+    <img src="images/create-workbook-20.png" />
+
+- クエリを記述、**クエリの実行** をクリックし、結果を確認
+
+  ```
+  let httpLogs = AppServiceHTTPLogs | where TimeGenerated > {TimeRange:start} | where  ScStatus == 500 | project TimeGen=substring(TimeGenerated, 0, 19), CsUriStem, ScStatus;
+  let consoleLogs = AppServiceConsoleLogs | where TimeGenerated > {TimeRange:start} | project TimeGen=substring(TimeGenerated, 0, 19), ResultDescription;
+  httpLogs
+  | join consoleLogs on TimeGen
+  | project TimeGen, CsUriStem, ScStatus, ResultDescription
+  ```
+
+  <img src="images/create-workbook-23.png" />
+
+- **編集完了** をクリック
+
+- グループ内の **追加** ‐ **テキストの追加** を選択
+
+- Markdown テキストを入力し **編集完了** をクリック
+
+  ```
+  ## HTTP ステータス コード (エラー)
+  ```
+
+  <img src="images/create-workbook-24.png" />
+
+- **移動** ‐ **先頭へ移動** をクリックし、グループ内の一番上にパーツを移動
+
+  <img src="images/create-workbook-24.png" />
+
+- グループの **編集完了** をクリック
+
+  <img src="images/create-workbook-25.png" />
+
+- **保存** をクリック
+
+  <img src="images/storage-account-book-08.png" />
+
+- タイトルを入力、リソース グループを選択し **適用** をクリック
+
+  - **タイトル**: アプリケーション レポート (任意)
+
+  - **サブスクリプション**: ワークショップで使用中のサブスクリプション
+
+  - **リソース グループ**: ワークショップで使用中のリソース グループ
+
+  - **場所**: リソース グループと同じ場所を選択
+
+  <img src="images/create-workbook-26.png" />
+
+- **編集完了** をクリック
+
+- 時間範囲のパラメーターを変更すると、レポート全体が更新されることを確認
+
+  <img src="images/create-workbook-27.png" />
