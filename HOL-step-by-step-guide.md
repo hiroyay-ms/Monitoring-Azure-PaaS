@@ -5,7 +5,25 @@ Jan. 2024
 
 <br />
 
-### Index
+### Contents
+
+- [Exercise 1: クラウド リソースの正常性評価](#exercise-1-クラウド-リソースの正常性評価)
+
+- [Exercise 2: Web サイトの稼働状況の確認](#exercise-2-web-サイトの稼働状況の確認)
+
+- [Exercise 3: Application Insights ログ ベースのメトリックの使用](#exercise-3-application-insights-ログ-ベースのメトリックの使用)
+
+- [Exercise 4: App Service メトリックによる視覚化とアラートの作成](#exercise-4-app-service-メトリックによる視覚化とアラートの作成)
+
+- [Exercise 5: Azure Front Door でのメトリックとログの監視](#exercise-5-azure-front-door-でのメトリックとログの監視)
+
+- [Exercise 6: ストレージ アカウントの監視](#exercise-6-ストレージ-アカウントの監視)
+
+- [Exercise 7: SQL Database の監視](#exercise-7-sql-database-の監視)
+
+- [Exercise 8: データ保持とアーカイブ](#exercise-8-データ保持とアーカイブ)
+
+- [Exercise 9: Azure Monitor ブックの管理](#exercise-9-azure-monitor-ブックの管理)
 
 <br />
 
