@@ -202,6 +202,8 @@ Jan. 2024
 <div dir="rtl">
 <a href="#contents">Back to Index</a>
 
+<br />
+
 ## Exercise 2: Web サイトの稼働状況の確認
 
 ### Task 1: Application Insights 標準テストの作成
@@ -718,13 +720,8 @@ Jan. 2024
 
 - [ログ リファレンス ‐ trace](https://learn.microsoft.com/ja-jp/azure/azure-monitor/reference/tables/traces)
 
-<br />
-
-<div style="text-align: right;">
-
-[Back to Index](#contents)
-
-</div>
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
 
 <br />
 
@@ -905,13 +902,8 @@ Jan. 2024
 
 - 指定した内容を確認し **作成** をクリック
 
-<br />
-
-<div style="text-align: right;">
-
-[Back to Index](#contents)
-
-</div>
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
 
 <br />
 
