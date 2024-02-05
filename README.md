@@ -5,7 +5,7 @@
 ### ディレクトリ構成
 
 ┣ .github  
-┃   ┣ workflows (GitHub Actions ワークフロー)  
+┃   ┗ workflows (GitHub Actions ワークフロー)  
 ┣ images  
 ┣ loadtest (JMeter スクリプト)  
 ┣ src  
