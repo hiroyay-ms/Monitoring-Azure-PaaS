@@ -436,6 +436,9 @@
             "apiVersion": "2021-05-01-preview",
             "name": "[variables('frontDoorDiagnostics')]",
             "scope": "[resourceId('Microsoft.Cdn/Profiles', variables('frontDoorName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Cdn/Profiles/AfdEndpoints', variables('frontDoorName'), 'afd')]"
+            ],
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]",
                 "logAnalyticsDestinationType": "Dedicated",
