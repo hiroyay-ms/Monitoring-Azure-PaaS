@@ -199,6 +199,12 @@ Jan. 2024
 
 <br />
 
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
+
+<br />
+
 ## Exercise 2: Web サイトの稼働状況の確認
 
 ### Task 1: Application Insights 標準テストの作成
@@ -362,6 +368,12 @@ Jan. 2024
   - **確認および作成** をクリック
 
 - 指定した内容を確認し **作成** をクリック
+
+<br />
+
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
 
 <br />
 
@@ -563,10 +575,10 @@ Jan. 2024
 
 - 左側のメニューで **ログ** を選択
 
-- **traces** テーブルをダブルクリックし、もしくは **traces** とクエリ ウィンドウに記述
+- **trace** テーブルをダブルクリックし、もしくは **trace** とクエリ ウィンドウに記述
 
   ```
-  traces
+  trace
   ```
 
 - **実行** をクリックし、クエリを実行
@@ -578,26 +590,26 @@ Jan. 2024
 - where 演算子によるフィルター処理
 
   ```
-  traces
+  trace
   | where operation_Name == 'GetProduct'
   ```
 
   ※KQL ではテーブル名、列名、演算子、関数など、すべてのものに対して大文字と小文字を区別
 
-  ※traces テーブルへの参照から始まり、where 演算子を使用し operationName 列の値でフィルター処理を実行
+  ※trace テーブルへの参照から始まり、where 演算子を使用し operationName 列の値でフィルター処理を実行
 
   <img src="images/appi-traces-02.png" />
 
 - 集計処理と視覚化
 
   ```
-  traces
+  trace
   | where timestamp > ago(12h)
   | summarize sum(itemCount) by bin(timestamp, 1h)
   | render barchart
   ```
 
-  ※traces テーブルへの参照から始まり、where と summarize, render 演算子をパイプで区切り指定
+  ※trace テーブルへの参照から始まり、where と summarize, render 演算子をパイプで区切り指定
 
   ※where 演算子を使用し timestamp 列の値でフィルター処理
   
@@ -714,6 +726,12 @@ Jan. 2024
 - [ログ リファレンス ‐ requests](https://learn.microsoft.com/ja-jp/azure/azure-monitor/reference/tables/requests)
 
 - [ログ リファレンス ‐ trace](https://learn.microsoft.com/ja-jp/azure/azure-monitor/reference/tables/traces)
+
+<br />
+
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
 
 <br />
 
@@ -896,6 +914,12 @@ Jan. 2024
 
 <br />
 
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
+
+<br />
+
 ## Exercise 5: Azure Front Door でのメトリックとログの監視
 
 ### Task 1: 組み込みレポートによるトラフィックとセキュリティ関連情報の確認
@@ -1015,6 +1039,12 @@ Jan. 2024
 
 <br />
 
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
+
+<br />
+
 ## Exercise 6: ストレージ アカウントの監視
 
 ### Task 1: 分析サービスを使用したストレージ サービスの監視
@@ -1081,6 +1111,12 @@ Jan. 2024
 ### 参考情報
 
 - [ログ リファレンス ‐ StorageBlobLogs](https://learn.microsoft.com/ja-jp/azure/azure-monitor/reference/tables/storagebloblogs)
+
+<br />
+
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
 
 <br />
 
@@ -1408,6 +1444,12 @@ Jan. 2024
 
 <br />
 
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
+
+<br />
+
 ## Exercise 8: データ保持とアーカイブ
 
 ### Task 1: Log Analytics ワークスペースの管理
@@ -1463,6 +1505,12 @@ Jan. 2024
 ### 参考情報
 
 - [Azure Monitor ログでのデータ保持とアーカイブ](https://learn.microsoft.com/ja-jp/azure/azure-monitor/logs/data-retention-archive?tabs=portal-1%2Cportal-2)
+
+<br />
+
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
 
 <br />
 
@@ -1791,3 +1839,9 @@ Jan. 2024
 - 時間範囲のパラメーターを変更すると、レポート全体が更新されることを確認
 
   <img src="images/create-workbook-27.png" />
+
+<br />
+
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+</div>
