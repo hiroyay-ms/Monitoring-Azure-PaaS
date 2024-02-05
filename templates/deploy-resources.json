@@ -583,13 +583,12 @@
                 "[resourceId('Microsoft.Web/serverfarms', variables('funcionHostingPlanName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('functionStorage'))]",
                 "[resourceId('Microsoft.Insights/components', variables('applicationInsights'))]",
-                "[resourceId('Microsoft.Resources/deployments', 'func-outboundSubnetDeployment')]",
-                "[resourceId('Microsoft.Resources/deployments', 'inboundSubnetDeployment')]"
+                "[resourceId('Microsoft.Resources/deployments', 'func-outboundSubnetDeployment')]"
             ],
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('funcionHostingPlanName'))]",
                 "httpsOnly": true,
-                "virtualNetworkSubnetId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetwork'), '/subnets/', parameters('subnet3'))]",
+                "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), parameters('subnet3'))]",
                 "publicNetworkAccess": "Enabled",
                 "vnetRouteAllEnabled": true,
                 "siteConfig": {
@@ -649,8 +648,7 @@
             "subscriptionId": "[subscription().subscriptionId]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetwork'))]",
-                "[resourceId('Microsoft.Resources/deployments', 'inboundSubnetDeployment')]",
-                "[resourceId('Microsoft.Resources/deployments', 'web-outboundSubnetDeployment')]"
+                "[resourceId('Microsoft.Resources/deployments', 'inboundSubnetDeployment')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -797,8 +795,7 @@
                 "[resourceId('Microsoft.Web/sites', variables('functionName'))]",
                 "[resourceId('Microsoft.Web/serverfarms', variables('webAppHostingPlanName'))]",
                 "[resourceId('Microsoft.Insights/components', variables('applicationInsights'))]",
-                "[resourceId('Microsoft.Resources/deployments', 'web-outboundSubnetDeployment')]",
-                "[resourceId('Microsoft.Resources/deployments', 'inboundSubnetDeployment')]"
+                "[resourceId('Microsoft.Resources/deployments', 'web-outboundSubnetDeployment')]"
             ],
             "properties": {
                 "siteConfig": {
@@ -842,8 +839,8 @@
             "subscriptionId": "[subscription().subscriptionId]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', variables('functionName'))]",
-                "[resourceId('Microsoft.Resources/deployments', 'inboundSubnetDeployment')]"
+                "[resourceId('Microsoft.Resources/deployments', 'inboundSubnetDeployment')]",
+                "[resourceId('Microsoft.Resources/deployments', 'func-outboundSubnetDeployment')]"
             ],
             "properties": {
                 "mode": "Incremental",
