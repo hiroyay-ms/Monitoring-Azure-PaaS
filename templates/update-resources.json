@@ -437,7 +437,7 @@
             "name": "[variables('frontDoorDiagnostics')]",
             "scope": "[resourceId('Microsoft.Cdn/Profiles', variables('frontDoorName'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.Cdn/Profiles/AfdEndpoints', variables('frontDoorName'), 'afd')]"
+                "[resourceId('Microsoft.Cdn/Profiles', variables('frontDoorName'))]"
             ],
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspace'))]",
