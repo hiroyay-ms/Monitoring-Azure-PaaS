@@ -649,7 +649,8 @@
             "subscriptionId": "[subscription().subscriptionId]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetwork'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), parameters('subnet3'))]"
+                "[resourceId('Microsoft.Resources/deployments', 'inboundSubnetDeployment')]",
+                "[resourceId('Microsoft.Resources/deployments', 'web-outboundSubnetDeployment')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -842,7 +843,7 @@
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', variables('functionName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), parameters('subnet2'))]"
+                "[resourceId('Microsoft.Resources/deployments', 'inboundSubnetDeployment')]"
             ],
             "properties": {
                 "mode": "Incremental",
