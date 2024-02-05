@@ -563,10 +563,10 @@ Jan. 2024
 
 - 左側のメニューで **ログ** を選択
 
-- **trace** テーブルをダブルクリックし、もしくは **trace** とクエリ ウィンドウに記述
+- **traces** テーブルをダブルクリックし、もしくは **traces** とクエリ ウィンドウに記述
 
   ```
-  trace
+  traces
   ```
 
 - **実行** をクリックし、クエリを実行
@@ -578,26 +578,26 @@ Jan. 2024
 - where 演算子によるフィルター処理
 
   ```
-  trace
+  traces
   | where operation_Name == 'GetProduct'
   ```
 
   ※KQL ではテーブル名、列名、演算子、関数など、すべてのものに対して大文字と小文字を区別
 
-  ※trace テーブルへの参照から始まり、where 演算子を使用し operationName 列の値でフィルター処理を実行
+  ※traces テーブルへの参照から始まり、where 演算子を使用し operationName 列の値でフィルター処理を実行
 
   <img src="images/appi-traces-02.png" />
 
 - 集計処理と視覚化
 
   ```
-  trace
+  traces
   | where timestamp > ago(12h)
   | summarize sum(itemCount) by bin(timestamp, 1h)
   | render barchart
   ```
 
-  ※trace テーブルへの参照から始まり、where と summarize, render 演算子をパイプで区切り指定
+  ※traces テーブルへの参照から始まり、where と summarize, render 演算子をパイプで区切り指定
 
   ※where 演算子を使用し timestamp 列の値でフィルター処理
   
