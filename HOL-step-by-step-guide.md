@@ -199,13 +199,8 @@ Jan. 2024
 
 <br />
 
-<div style="text-align: right;">
-
-[Back to Index](#contents)
-
-</div>
-
-<br />
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
 
 ## Exercise 2: Web サイトの稼働状況の確認
 
