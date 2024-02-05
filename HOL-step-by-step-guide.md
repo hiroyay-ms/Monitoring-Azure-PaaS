@@ -370,6 +370,11 @@ Jan. 2024
 
 <br />
 
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
+
+<br />
+
 ## Exercise 3: Application Insights ログ ベースのメトリックの使用
 
 ### Task 1: アプリケーションの正常性とパフォーマンスの確認
@@ -720,6 +725,8 @@ Jan. 2024
 
 - [ログ リファレンス ‐ trace](https://learn.microsoft.com/ja-jp/azure/azure-monitor/reference/tables/traces)
 
+<br />
+
 <div dir="rtl">
 <a href="#contents">Back to Index</a>
 
@@ -902,6 +909,8 @@ Jan. 2024
 
 - 指定した内容を確認し **作成** をクリック
 
+<br />
+
 <div dir="rtl">
 <a href="#contents">Back to Index</a>
 
@@ -1026,11 +1035,8 @@ Jan. 2024
 
 <br />
 
-<div style="text-align: right;">
-
-[Back to Index](#contents)
-
-</div>
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
 
 <br />
 
@@ -1103,11 +1109,8 @@ Jan. 2024
 
 <br />
 
-<div style="text-align: right;">
-
-[Back to Index](#contents)
-
-</div>
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
 
 <br />
 
@@ -1435,11 +1438,8 @@ Jan. 2024
 
 <br />
 
-<div style="text-align: right;">
-
-[Back to Index](#contents)
-
-</div>
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
 
 <br />
 
@@ -1501,11 +1501,8 @@ Jan. 2024
 
 <br />
 
-<div style="text-align: right;">
-
-[Back to Index](#contents)
-
-</div>
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
 
 <br />
 
@@ -1835,10 +1832,7 @@ Jan. 2024
 
   <img src="images/create-workbook-27.png" />
 
-<div style="text-align: right;">
-
-[Back to Index](#contents)
-
-</div>
-
 <br />
+
+<div dir="rtl">
+<a href="#contents">Back to Index</a>
