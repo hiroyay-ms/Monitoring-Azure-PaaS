@@ -35,6 +35,10 @@ Jan. 2024
 
 ## Exercise 1: クラウド リソースの正常性評価
 
+<img src="images/exercise-1.png" />
+
+<br />
+
 ### Task 1: サービス正常性アラートの作成
 
 - Azure ポータルのトップ画面から検索バーに **サービス正常性** と入力
@@ -207,6 +211,10 @@ Jan. 2024
 
 ## Exercise 2: Web サイトの稼働状況の確認
 
+<img src="images/exercise-2.png" />
+
+<br />
+
 ### Task 1: Application Insights 標準テストの作成
 
 - Application Insights の管理ブレードから **有効** を選択
@@ -378,6 +386,10 @@ Jan. 2024
 <br />
 
 ## Exercise 3: Application Insights ログ ベースのメトリックの使用
+
+<img src="images/exercise-34.png" />
+
+<br />
 
 ### Task 1: アプリケーションの正常性とパフォーマンスの確認
 
@@ -737,6 +749,10 @@ Jan. 2024
 
 ## Exercise 4: App Service メトリックによる視覚化とアラートの作成
 
+<img src="images/exercise-34.png" />
+
+<br />
+
 ### Task 1: 受信 HTTP 要求の確認
 
 - Web App 管理ブレードを表示、左側のメニューから **ログ** を選択
@@ -922,6 +938,10 @@ Jan. 2024
 
 ## Exercise 5: Azure Front Door でのメトリックとログの監視
 
+<img src="images/exercise-5.png" />
+
+<br />
+
 ### Task 1: 組み込みレポートによるトラフィックとセキュリティ関連情報の確認
 
 - Azure Front Door 管理ブレードへ移動、左側のメニューから **レポート** を選択
@@ -1047,6 +1067,10 @@ Jan. 2024
 
 ## Exercise 6: ストレージ アカウントの監視
 
+<img src="images/exercise-6.png" />
+
+<br />
+
 ### Task 1: 分析サービスを使用したストレージ サービスの監視
 
 - ストレージ アカウントの管理ブレードを表示、左側のメニューで **分析情報** を選択
@@ -1121,6 +1145,10 @@ Jan. 2024
 <br />
 
 ## Exercise 7: SQL Database の監視
+
+<img src="images/exercise-7.png" />
+
+<br />
 
 ### Task 1: リソース消費が大きく、長時間実行されるクエリの特定
 
@@ -1515,6 +1543,10 @@ Jan. 2024
 <br />
 
 ## Exercise 9: Azure Monitor ブックの管理
+
+<img src="images/exercise-9.png" />
+
+<br />
 
 ### Task 1: Azure ブックのカスタマイズ
 
