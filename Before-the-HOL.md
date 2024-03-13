@@ -18,6 +18,14 @@ Jan. 2024
 
 <br />
 
+### リソースプロバイダーの有効化
+
+- `Microsoft.Storage`
+- `Microsoft.LoadTestService`
+- `Microsoft.Web`
+
+<br />
+
 ### リソースの展開
 
 Virtual Network (Subnet x3), Network Security Group x3, Private DNS Zone x4 (Blob, Files, SQL, Web sites),  
