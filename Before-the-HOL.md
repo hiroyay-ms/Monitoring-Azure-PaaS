@@ -23,6 +23,7 @@ Jan. 2024
 - `Microsoft.Storage`
 - `Microsoft.LoadTestService`
 - `Microsoft.Web`
+- `Microsoft.CloudShell`
 
 <br />
 
