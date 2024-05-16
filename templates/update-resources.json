@@ -462,7 +462,7 @@
         },
         {
             "type": "Microsoft.LoadTestService/loadtests",
-            "apiVersion": "2021-12-01-preview",
+            "apiVersion": "2022-12-01",
             "name": "[variables('loadtestingWorkspace')]",
             "location": "[resourceGroup().location]",
             "properties": {}
